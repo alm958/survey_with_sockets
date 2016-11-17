@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>user form</title>
+        <link rel="stylesheet" type="text/css" href="./master.css">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                var socket = io.connect();
+
+                $('.newuser').on('click', function (){
+                    var formdata =  $("form").serializeArray();
+                    var formobj = {};
+                    for (var i = 0; i < formdata.length; i++){
+                        formobj[formdata[i].name] = formdata[i].value;
+                    }
+                    console.log(formdata);
+                    console.log(formobj);
+                    socket.emit("button_clicked", formobj);
+                });
+
+                socket.on('server_response', function (data){
+                    console.log(data);
+                    $('form').toggleClass("hide");
+                    $('.response').html(`<h2>Here is the data you emited to the server</h2><p>Name : ${data.formobj.name}</p><p>Dojo : ${data.formobj.dojo}</p><p>Favorite Language : ${data.formobj.fav_lang}</p><p>Comment:</p><p> ${data.formobj.comment}</p><p>Your Lucky Number emited from the server is: ${data.randnum}</p><button class='reset' type="button" name="button">Reset</button>`);
+                });
+                
+                $('.reset').on('click', function (){
+                    console.log('reset hit');
+                    $('form').toggleClass("hide");
+                    $('.response').empty();
+                });
+
+            })
+        </script>
+    </head>
+    <body>
+        <form action="/results" method="post">
+            <label>Name :<input type="test" name="name" value=""></label><br>
+            <label>Dojo :<select name='dojo'>
+              <option value="seattle">Seattle</option>
+              <option value="sanjose">San Jose</option>
+              <option value="dallas">Dallas</option>
+              <option value="washingtondc">Washington DC</option>
+            </select></label><br>
+            <label>Favorite Language :<select name='fav_lang'>
+              <option value="javascript">Javascript</option>
+              <option value="python">Python</option>
+              <option value="java">Java</option>
+              <option value="ruby">Ruby</option>
+            </select></label><br>
+            <label>Comment :<br><textarea name='comment' rows="4" cols="50"></textarea></label><br>
+            <button class="newuser" type="button" name="button">Submit</button>
+        </form>
+        <div class="response">
+
+        </div>
+
+    </body>
+</html>
