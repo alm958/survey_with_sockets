@@ -26,9 +26,10 @@
                     $('form').toggleClass("hide");
                     $('.response').html(`<h2>Here is the data you emited to the server</h2><p>Name : ${data.formobj.name}</p><p>Dojo : ${data.formobj.dojo}</p><p>Favorite Language : ${data.formobj.fav_lang}</p><p>Comment:</p><p> ${data.formobj.comment}</p><p>Your Lucky Number emited from the server is: ${data.randnum}</p><button class='reset' type="button" name="button">Reset</button>`);
                 });
-                
-                $('.reset').on('click', function (){
+
+                $('div.response').on('click', 'button.reset', function (){
                     console.log('reset hit');
+                    $("form").trigger('reset');
                     $('form').toggleClass("hide");
                     $('.response').empty();
                 });
@@ -40,10 +41,10 @@
         <form action="/results" method="post">
             <label>Name :<input type="test" name="name" value=""></label><br>
             <label>Dojo :<select name='dojo'>
-              <option value="seattle">Seattle</option>
-              <option value="sanjose">San Jose</option>
-              <option value="dallas">Dallas</option>
-              <option value="washingtondc">Washington DC</option>
+              <option value="Seattle">Seattle</option>
+              <option value="San Jose">San Jose</option>
+              <option value="Dallas">Dallas</option>
+              <option value="Washington DC">Washington DC</option>
             </select></label><br>
             <label>Favorite Language :<select name='fav_lang'>
               <option value="javascript">Javascript</option>
@@ -54,9 +55,6 @@
             <label>Comment :<br><textarea name='comment' rows="4" cols="50"></textarea></label><br>
             <button class="newuser" type="button" name="button">Submit</button>
         </form>
-        <div class="response">
-
-        </div>
-
+        <div class="response"></div>
     </body>
 </html>

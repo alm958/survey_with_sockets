@@ -1,0 +1,21 @@
+{
+  "name": "SocketSurveyForm",
+  "description": "",
+  "main": "server.js",
+  "authors": [
+    "alm958 <alm958@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery-serialize-object": "^2.5.0"
+  }
+}
